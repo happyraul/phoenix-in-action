@@ -3,8 +3,9 @@ defmodule Auction.Item do
   use Ecto.Schema
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @field_source_mapper fn f -> String.to_atom("a_" <> to_string(f)) end
 
-  schema "items" do
+  schema "t_items" do
     field :title, :string
     field :description, :string
     field :ends_at, :utc_datetime
@@ -22,7 +23,7 @@ defmodule Auction.Item do
 
   defp validate(:ends_at, ends_at_date) do
     case DateTime.compare(ends_at_date, DateTime.utc_now()) do
-      :lt -> [ends_at: "ends_at cannot be in the past"]
+      :lt -> [ends_at: "Auction end date cannot be in the past"]
       _ -> []
     end
   end
