@@ -4,9 +4,9 @@ defmodule Auction.Repo.Migrations.CreateItems do
   def change do
     create table(:t_items, primary_key: false) do
       add :a_id, :uuid, primary_key: true
-      add :a_title, :text
+      add :a_title, :text, null: false
       add :a_description, :text
-      add :a_ends_at, :utc_datetime
+      add :a_ends_at, :utc_datetime, null: false
       timestamps(inserted_at: :a_inserted_at, updated_at: :a_updated_at)
     end
   end
