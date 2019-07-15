@@ -19,6 +19,7 @@ defmodule Auction.User do
     |> validate_required([:username, :email_address, :hashed_password])
     |> validate_length(:username, min: 16)
     |> lower_username()
+    |> lower_email()
     |> unique_constraint(:username)
   end
 
@@ -45,4 +46,11 @@ defmodule Auction.User do
      |> put_change(:username, String.downcase(username))
   end
   defp lower_username(changeset), do: changeset
+
+  defp lower_email(%Ecto.Changeset{changes: %{email_address: email_address}} =
+   changeset) do
+     changeset
+     |> put_change(:email_address, String.downcase(email_address))
+  end
+  defp lower_email(changeset), do: changeset
 end
