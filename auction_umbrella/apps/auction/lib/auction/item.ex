@@ -1,6 +1,6 @@
 defmodule Auction.Item do
-  import Ecto.Changeset
   use Ecto.Schema
+  import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @field_source_mapper fn f -> String.to_atom("a_" <> to_string(f)) end
@@ -9,6 +9,7 @@ defmodule Auction.Item do
     field :title, :string
     field :description, :string
     field :ends_at, :utc_datetime
+    has_many :bids, Auction.Bid
     timestamps()
   end
 

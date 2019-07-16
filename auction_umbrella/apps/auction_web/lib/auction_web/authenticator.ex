@@ -4,13 +4,16 @@ defmodule AuctionWeb.Authenticator do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    user =
+    result =
       conn
       |> get_session(:user_id)
       |> case do
         nil -> nil
-        id -> Auction.get_user(id)
+        id -> Auction.find_user(id)
       end
-    assign(conn, :current_user, user)
+    case result do
+      nil -> assign(conn, :current_user, nil)
+      user -> assign(conn, :current_user, user)
+    end
   end
 end

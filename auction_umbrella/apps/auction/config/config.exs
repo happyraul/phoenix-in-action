@@ -28,7 +28,8 @@ config :auction, Auction.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  port: "5432"
+  port: "5432",
+  migration_primary_key: [name: :a_id, type: :binary_id]
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

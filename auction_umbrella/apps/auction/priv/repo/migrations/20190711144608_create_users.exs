@@ -2,8 +2,7 @@ defmodule Auction.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do
-    create table(:t_users, primary_key: false) do
-      add :a_id, :uuid, primary_key: true
+    create table(:t_users) do
       add :a_username, :text, null: false
       add :a_email_address, :text, null: false
       add :a_hashed_password, :text, null: false
