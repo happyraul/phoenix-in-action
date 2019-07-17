@@ -54,10 +54,20 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Finally, connect to the socket:
 socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+let match = document.location.pathname.match(/\/items\/([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$/)
+if (match) {
+  let itemId = match[1]
+  let channel = socket.channel(`item:${itemId}`, {})
+
+  // Now that you are connected, you can join channels with a topic:
+  channel
+    .join()
+    .receive("ok", resp => {
+      console.log("Joined successfully", resp)
+    })
+    .receive("error", resp => {
+      console.log("Unable to join", resp)
+    })
+}
 
 export default socket
